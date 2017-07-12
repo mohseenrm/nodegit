@@ -4,7 +4,7 @@ var assert = require("assert"),
   path = require("path"),
   local = path.join.bind(path, __dirname);
 
-describe("Filter", function() {
+describe.only("Filter", function() {
   var NodeGit = require("../../");
 
   var emptyRepoPath = local("../repos/empty");
@@ -783,7 +783,7 @@ describe("Filter", function() {
       });
     });
 
-    it("is not called when apply returns GIT_PASSTHROUGH", function() {
+    it("is not called when check returns GIT_PASSTHROUGH", function() {
       var test = this;
       var cleaned = false;
 
@@ -792,10 +792,10 @@ describe("Filter", function() {
           return 0;
         },
         apply: function() {
-          return GIT_PASSTHROUGH;
+          return 0;
         },
         check: function() {
-          return 0;
+          return GIT_PASSTHROUGH;
         },
         cleanup: function() {
           cleaned = true;
