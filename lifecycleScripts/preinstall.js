@@ -12,6 +12,7 @@ module.exports = function prepareForBuild() {
     .then(function(npmVersion) {
       if (npmVersion.split(".")[0] <= 3) {
         console.log("[nodegit] npm@2 installed, pre-loading required packages");
+        console.log("Got in");
         return exec("npm install --ignore-scripts && node generate && npm run babel", {
           cwd: local(".."),
           shell: true
@@ -21,9 +22,11 @@ module.exports = function prepareForBuild() {
       return Promise.resolve();
     })
     .then(function() {
+      console.info("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
       return configure();
     })
     .then(function() {
+      console.log("passed configure");
       if (buildFlags.isGitRepo) {
         var submodules = require(local("submodules"));
         var generate = require(local("../generate"));

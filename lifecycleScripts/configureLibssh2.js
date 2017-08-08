@@ -21,13 +21,13 @@ module.exports = function retrieveExternalDependencies() {
     newEnv.CPPFLAGS = newEnv.CPPFLAGS || "";
     newEnv.CPPFLAGS += " -I" + path.join(opensslDir, "include");
     newEnv.CPPFLAGS = newEnv.CPPFLAGS.trim();
-
     cp.exec(
       rooted("vendor/libssh2/configure") +
         " --with-libssl-prefix=" + opensslDir,
       {cwd: rooted("vendor/libssh2/"), env: newEnv},
       function(err, stdout, stderr) {
         if (err) {
+          console.info("In configure");
           console.error(err);
           console.error(stderr);
           reject(err, stderr);
