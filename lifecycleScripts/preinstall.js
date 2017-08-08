@@ -10,9 +10,12 @@ module.exports = function prepareForBuild() {
 
   return exec("npm -v")
     .then(function(npmVersion) {
-      if (npmVersion.split(".")[0] < 3) {
+      if (npmVersion.split(".")[0] <= 3) {
         console.log("[nodegit] npm@2 installed, pre-loading required packages");
-        return exec("npm install --ignore-scripts");
+        return exec("npm install --ignore-scripts && node generate && npm run babel", {
+          cwd: local(".."),
+          shell: true
+        });
       }
 
       return Promise.resolve();
